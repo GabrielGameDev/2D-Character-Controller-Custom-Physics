@@ -33,8 +33,14 @@ public class PhysicsObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        targetVelocity = Vector2.zero; //zera a velocidade alvo
+        ComputeVelocity();
     }
+
+    protected virtual void ComputeVelocity()
+    {
+
+	}
 
 	private void FixedUpdate()
 	{
@@ -48,6 +54,7 @@ public class PhysicsObject : MonoBehaviour
         //a posição é alterada de acordo com a velocidade
         Vector2 deltaPosition = velocity * Time.deltaTime;
 		Vector2 moveAlongGround = new Vector2(groundNormal.y, -groundNormal.x); //vetor de movimento na horizontal
+      
         Vector2 move = moveAlongGround * deltaPosition.x; //vetor de movimento na horizontal
         Movement(move, false); //movimenta o objeto na horizontal
 		move = Vector2.up * deltaPosition.y;
@@ -61,14 +68,11 @@ public class PhysicsObject : MonoBehaviour
         {
 			//projeta o colisor do objeto na direção do movimento para verificar colisões
 			int count = rb2d.Cast(move, contactFilter, raycastHit2Ds, distance + shellRadius); 
-            //rayCastHitList.Clear(); //limpa a lista de colisões
-            //for (int i = 0; i < count; i++)
-            //{
-            //    rayCastHitList.Add(raycastHit2Ds[i]);
-            //}
+            
             for (int i = 0; i < count; i++)
             {
                 Vector2 currentNormal = raycastHit2Ds[i].normal;
+                
                 if(currentNormal.y > minGroundNormalY) //verifica se o objeto está no chão
                 {
                     grounded = true;
