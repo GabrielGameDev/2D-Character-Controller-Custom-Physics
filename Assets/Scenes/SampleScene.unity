@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 449370395}
   - component: {fileID: 449370398}
   - component: {fileID: 449370397}
+  - component: {fileID: 449370399}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -291,6 +292,19 @@ CapsuleCollider2D:
   m_Offset: {x: -0.030671805, y: 0.0076679885}
   m_Size: {x: 0.69328135, y: 0.984664}
   m_Direction: 0
+--- !u!114 &449370399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449370394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41643ecddcb597c4192e546f68439979, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravityModifier: 1
 --- !u!1 &460570203
 GameObject:
   m_ObjectHideFlags: 0
@@ -1417,7 +1431,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 5.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
