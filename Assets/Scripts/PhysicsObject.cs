@@ -9,10 +9,11 @@ public class PhysicsObject : MonoBehaviour
 
     protected Rigidbody2D rb2d;
     protected Vector2 velocity; //velocidade atual do objeto
+    protected Vector2 targetVelocity; //velocidade alvo do objeto
 
     protected ContactFilter2D contactFilter; //filtro de colisão
     protected RaycastHit2D[] raycastHit2Ds = new RaycastHit2D[16]; //vetor de colisões
-    protected List<RaycastHit2D> rayCastHitList = new List<RaycastHit2D>(16); //lista de colisões
+    
     protected bool grounded; //verifica se o objeto está no chão
     protected Vector2 groundNormal; //normal do chão
 
@@ -39,12 +40,17 @@ public class PhysicsObject : MonoBehaviour
 	{
         //a todo momento a velocidade é alterada pela gravidade
 		velocity += gravityModifier * Physics2D.gravity * Time.deltaTime;
+		velocity.x = targetVelocity.x; //a velocidade na horizontal é igual a velocidade alvo
 
-        grounded = false; //o objeto não está no chão
+		grounded = false; //o objeto não está no chão
+        
 
         //a posição é alterada de acordo com a velocidade
         Vector2 deltaPosition = velocity * Time.deltaTime;
-        Vector2 move = Vector2.up * deltaPosition.y;
+		Vector2 moveAlongGround = new Vector2(groundNormal.y, -groundNormal.x); //vetor de movimento na horizontal
+        Vector2 move = moveAlongGround * deltaPosition.x; //vetor de movimento na horizontal
+        Movement(move, false); //movimenta o objeto na horizontal
+		move = Vector2.up * deltaPosition.y;
         Movement(move, true);
 	}
 
