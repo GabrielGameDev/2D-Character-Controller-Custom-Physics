@@ -82,6 +82,7 @@ public class PhysicsObject : MonoBehaviour
 						currentNormal.x = 0; //zera a normal na horizontal
 					}
 				}
+                
 
                 float projection = Vector2.Dot(velocity, currentNormal); //calcula a projeção da velocidade na normal
                 if(projection < 0) //se a projeção for menor que zero
