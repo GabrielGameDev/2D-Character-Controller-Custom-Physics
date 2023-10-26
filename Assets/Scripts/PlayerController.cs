@@ -8,6 +8,15 @@ public class PlayerController : PhysicsObject
     public float jumpSpeed = 7f; //velocidade de pulo
     public float jumpVelocityReduction = 0.5f; //redução da velocidade de pulo
    
+    Animator animator; //animações do personagem
+    SpriteRenderer spriteRenderer; //sprite do personagem
+
+    bool facingRight = true; //verifica se o personagem está virado para a direita
+	private void Awake()
+	{
+	    animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+	}
 
 	protected override void ComputeVelocity()
 	{
@@ -24,6 +33,20 @@ public class PlayerController : PhysicsObject
 				velocity.y *= jumpVelocityReduction; //reduz a velocidade na vertical
 			}
 		}
+
+        if(facingRight && move.x < 0)
+        {
+            spriteRenderer.flipX = true; //vira o sprite
+			facingRight = false; //o personagem não está virado para a direita
+		}
+		else if(!facingRight && move.x > 0)
+        {
+			spriteRenderer.flipX = false; //vira o sprite
+			facingRight = true; //o personagem está virado para a direita
+        }
+
+        animator.SetBool("onGround", grounded); //seta a animação de pulo
+        animator.SetBool("run", move.x != 0); //seta a animação de andar
 
         targetVelocity = move * maxSpeed; //a velocidade alvo é igual a velocidade máxima multiplicada pelo movimento
     }
